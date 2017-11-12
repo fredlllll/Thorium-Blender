@@ -1,4 +1,4 @@
-﻿namespace Thorium_Blender
+﻿/*namespace Thorium_Blender
 {
     internal class Resolution
     {
@@ -20,4 +20,4 @@
         }
 
     }
-}
+}*/
