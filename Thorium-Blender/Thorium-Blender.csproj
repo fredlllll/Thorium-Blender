@@ -42,6 +42,9 @@
     <Reference Include="Thorium-Shared">
       <HintPath>..\..\Thorium\C# Project\Thorium-Shared\bin\Debug\Thorium-Shared.dll</HintPath>
     </Reference>
+    <Reference Include="Thorium-Storage-Service">
+      <HintPath>..\..\Thorium\C# Project\Thorium-Storage-Service\bin\Debug\Thorium-Storage-Service.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BlenderExecutioner.cs" />

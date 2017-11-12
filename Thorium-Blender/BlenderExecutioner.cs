@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using Thorium_Shared;
+using Thorium_Storage_Service;
 
 namespace Thorium_Blender
 {
@@ -16,8 +17,8 @@ namespace Thorium_Blender
             string filename = Task.GetInfo<string>("filename");
             int frame = Task.GetInfo<int>("frame");
 
-            string outputFile = Path.Combine(Directories.TempDir, Task.JobID, Task.ID, "frame" + frame + ".png");
-            Console.WriteLine("outputFile: " + outputFile);
+            string outputDir = Path.Combine(Directories.TempDir, Task.JobID, Task.ID);
+            string outputFile = Path.Combine(outputDir, "frame" + frame + ".png");
 
             RunExecutableAction rea = new RunExecutableAction
             {
@@ -42,6 +43,8 @@ namespace Thorium_Blender
             //TODO: add custom arguments
 
             rea.StartAndWait();
+
+            StorageService.UploadResults(Task.JobID, Task.ID, outputDir, true);
         }
     }
 }
