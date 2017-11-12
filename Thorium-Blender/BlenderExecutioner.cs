@@ -41,10 +41,13 @@ namespace Thorium_Blender
             rea.AddArgument("--"); //blender stops parsing after this, but can be parsed by python scripts
 
             //TODO: add custom arguments
-
             rea.StartAndWait();
 
-            StorageService.UploadResults(Task.JobID, Task.ID, outputDir, true);
+            System.Threading.Tasks.Task task = new System.Threading.Tasks.Task(() =>
+            {
+                StorageService.UploadResults(Task.JobID, Task.ID, outputDir, true);
+            });
+            task.Start();
         }
     }
 }
