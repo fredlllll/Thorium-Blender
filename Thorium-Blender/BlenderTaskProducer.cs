@@ -21,7 +21,8 @@ namespace Thorium_Blender
             {
                 JObject info = new JObject
                 {
-                    ["frame"] = frame,
+                    ["startFrame"] = frame,
+                    ["endFrame"] = frame
                 };
 
                 yield return new Task(Job, Utils.GetRandomID(), info);

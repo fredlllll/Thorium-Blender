@@ -13,22 +13,35 @@ namespace Thorium_Blender
 
         public override void Execute()
         {
-            string blenderExecutable = Task.GetInfo<string>("blenderExecutable");
-            string filename = Task.GetInfo<string>("filename");
-            int frame = Task.GetInfo<int>("frame");
+            string dataPackage = Task.GetInfo<string>("dataPackage");
+            string workingDir = Path.Combine(Directories.TempDir, Task.ID);
+            StorageService.MakeDataPackageAvailable(dataPackage, workingDir, UnzipThings);
 
-            string outputDir = Path.Combine(Directories.TempDir, Task.JobID, Task.ID);
-            string outputFile = Path.Combine(outputDir, "frame" + frame + ".png");
+            //string blenderExecutable = Task.GetInfo<string>("blenderExecutable");
+            string fileName = Task.GetInfo<string>("fileName");
+            string filePath = Path.Combine(workingDir, fileName);
+            int startFrame = Task.GetInfo<int>("startFrame");
+            int endFrame = Task.GetInfo<int>("nedFrame");
+
+            //string outputDir = Path.Combine(Directories.TempDir, Task.JobID, Task.ID);
+            //string outputFile = Path.Combine(outputDir, "frame####.png");
 
             RunExecutableAction rea = new RunExecutableAction
             {
-                FileName = blenderExecutable
+                FileName = Thorium_Shared.Files.GetExecutablePath("bash")
             };
-            rea.AddArgument("-b"); //console mode "background"
-            rea.AddArgument(filename);
+            rea.AddArgument("/scripts/sarfis.sh");
+            rea.AddArgument(filePath);
+            rea.AddArgument(startFrame.ToString());
+            rea.AddArgument(endFrame.ToString());
+            rea.AddArgument(Task.JobID);
+            rea.AddArgument(Task.ID);
+
+            //rea.AddArgument("-b"); //console mode "background"
+            //rea.AddArgument(filename);
             //rea.AddArgument("-y");//auto run python scripts
-            rea.AddArgument("-o");//output file
-            rea.AddArgument(outputFile);
+            //rea.AddArgument("-o");//output file
+            //rea.AddArgument(outputFile);
             //rea.AddArgument("-F"); //format
             //rea.AddArgument("PNG"); //PNG
             //rea.AddArgument("-E"); //engine
@@ -36,18 +49,29 @@ namespace Thorium_Blender
             //rea.AddArgument("-P"); //run this script on startup
             //rea.AddArgument("somescript.py");//the script
             //rea.AddArgument("-a");// use settings from blend file
-            rea.AddArgument("-f");
-            rea.AddArgument(frame.ToString());
-            rea.AddArgument("--"); //blender stops parsing after this, but can be parsed by python scripts
-
+            //rea.AddArgument("-f");
+            //rea.AddArgument(frame.ToString());
+            //rea.AddArgument("--"); //blender stops parsing after this, but can be parsed by python scripts
             //TODO: add custom arguments
+
             rea.StartAndWait();
 
-            System.Threading.Tasks.Task task = new System.Threading.Tasks.Task(() =>
+            /*System.Threading.Tasks.Task task = new System.Threading.Tasks.Task(() =>
             {
                 StorageService.UploadResults(Task.JobID, Task.ID, outputDir, true);
             });
-            task.Start();
+            task.Start();*/
+        }
+
+        void UnzipThings(string downloadFolder, string targetFolder)
+        {
+            RunExecutableAction rea = new RunExecutableAction
+            {
+                FileName = Thorium_Shared.Files.GetExecutablePath("unzip")
+            };
+            rea.AddArgument(Path.Combine(downloadFolder, "datapackage.zip"));
+            rea.AddArgument("-d");
+            rea.AddArgument(targetFolder);
         }
     }
 }
