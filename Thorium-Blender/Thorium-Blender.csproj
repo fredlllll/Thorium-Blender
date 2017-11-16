@@ -40,13 +40,6 @@
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Thorium-Shared">
-      <HintPath>..\..\Thorium\C# Project\Thorium-Shared\bin\Debug\Thorium-Shared.dll</HintPath>
-    </Reference>
-    <Reference Include="Thorium-Storage-Service">
-      <HintPath>..\..\Thorium\C# Project\Thorium-Storage-Service\bin\Debug\Thorium-Storage-Service.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BlenderExecutioner.cs" />
@@ -62,6 +55,16 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Thorium-Computing-Farm\Source\Thorium-Shared\Thorium-Shared.csproj">
+      <Project>{fe33d9c9-43ca-4ec3-ab9f-154611627bff}</Project>
+      <Name>Thorium-Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Thorium-Computing-Farm\Source\Thorium-Storage-Service\Thorium-Storage-Service.csproj">
+      <Project>{60ce86de-d3eb-4052-b3f7-3950ba29bb63}</Project>
+      <Name>Thorium-Storage-Service</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
