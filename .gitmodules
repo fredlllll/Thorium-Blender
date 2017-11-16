@@ -1,0 +1,4 @@
+[submodule "Thorium-Computing-Farm"]
+	path = Thorium-Computing-Farm
+	url = https://github.com/fredlllll/Thorium-Computing-Farm
+	branch = master
