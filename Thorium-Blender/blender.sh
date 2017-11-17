@@ -9,7 +9,7 @@
 
 workingDir=/tmp/frames/$jobId/$taskId
 
-mkdir $workingDir
+mkdir -p $workingDir
 
 $blender2_79 -b $blendPath -s $startFrame -e $endFrame -o $workingDir/ -s
 
