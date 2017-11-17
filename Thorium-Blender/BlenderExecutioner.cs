@@ -82,6 +82,8 @@ namespace Thorium_Blender
             rea.AddArgument(Path.Combine(downloadFolder, "datapackage.zip"));
             rea.AddArgument("-d");
             rea.AddArgument(targetFolder);
+
+            rea.StartAndWait();
         }
     }
 }
