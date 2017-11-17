@@ -7,7 +7,7 @@
 #jobId
 #taskId
 
-workingDir=/tmp/frames/$jobId/$taskId
+workingDir=/tmp/$jobId/$taskId
 
 mkdir -p $workingDir
 
