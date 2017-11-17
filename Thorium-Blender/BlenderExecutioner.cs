@@ -38,7 +38,7 @@ namespace Thorium_Blender
             {
                 FileName = Thorium_Shared.Files.GetExecutablePath("bash")
             };
-            rea.AddArgument(Path.Combine(pluginDir, "sarfis.sh"));
+            rea.AddArgument(Path.Combine(pluginDir, "blender.sh"));
             rea.Environment["blendPath"] = filePath;
             rea.Environment["startFrame"] = startFrame.ToString();
             rea.Environment["endFrame"] = endFrame.ToString();
