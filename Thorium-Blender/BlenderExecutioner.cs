@@ -7,21 +7,26 @@ namespace Thorium_Blender
 {
     public class BlenderExecutioner : AExecutioner
     {
+        public const string ArgDataPackage = "dataPackage";
+        public const string ArgFileName = "fileName";
+        public const string ArgStartFrame = "startFrame";
+        public const string ArgEndFrame = "endFrame";
+
         public BlenderExecutioner(LightweightTask t) : base(t)
         {
         }
 
         public override void Execute()
         {
-            string dataPackage = Task.GetInfo<string>("dataPackage");
+            string dataPackage = Task.GetInfo<string>(ArgDataPackage);
             string workingDir = Path.Combine(Directories.TempDir, Task.ID);
             StorageService.MakeDataPackageAvailable(dataPackage, workingDir, UnzipThings);
 
             //string blenderExecutable = Task.GetInfo<string>("blenderExecutable");
-            string fileName = Task.GetInfo<string>("fileName");
+            string fileName = Task.GetInfo<string>(ArgFileName);
             string filePath = Path.Combine(workingDir, fileName);
-            int startFrame = Task.GetInfo<int>("startFrame");
-            int endFrame = Task.GetInfo<int>("nedFrame");
+            int startFrame = Task.GetInfo<int>(ArgStartFrame);
+            int endFrame = Task.GetInfo<int>(ArgEndFrame);
 
             //string outputDir = Path.Combine(Directories.TempDir, Task.JobID, Task.ID);
             //string outputFile = Path.Combine(outputDir, "frame####.png");
@@ -61,6 +66,8 @@ namespace Thorium_Blender
                 StorageService.UploadResults(Task.JobID, Task.ID, outputDir, true);
             });
             task.Start();*/
+
+            Directory.Delete(workingDir, true);
         }
 
         void UnzipThings(string downloadFolder, string targetFolder)
