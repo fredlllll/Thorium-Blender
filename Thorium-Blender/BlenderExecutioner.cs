@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Reflection;
 using Thorium_Shared;
 using Thorium_Storage_Service;
 
@@ -18,6 +19,8 @@ namespace Thorium_Blender
 
         public override void Execute()
         {
+            string pluginDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+
             string dataPackage = Task.GetInfo<string>(ArgDataPackage);
             string workingDir = Path.Combine(Directories.TempDir, Task.ID);
             StorageService.MakeDataPackageAvailable(dataPackage, workingDir, UnzipThings);
@@ -35,12 +38,12 @@ namespace Thorium_Blender
             {
                 FileName = Thorium_Shared.Files.GetExecutablePath("bash")
             };
-            rea.AddArgument("/scripts/sarfis.sh");
-            rea.AddArgument(filePath);
-            rea.AddArgument(startFrame.ToString());
-            rea.AddArgument(endFrame.ToString());
-            rea.AddArgument(Task.JobID);
-            rea.AddArgument(Task.ID);
+            rea.AddArgument(Path.Combine(pluginDir, "sarfis.sh"));
+            rea.Environment["blendPath"] = filePath;
+            rea.Environment["startFrame"] = startFrame.ToString();
+            rea.Environment["endFrame"] = endFrame.ToString();
+            rea.Environment["jobId"] = Task.JobID;
+            rea.Environment["taskId"] = Task.ID;
 
             //rea.AddArgument("-b"); //console mode "background"
             //rea.AddArgument(filename);
