@@ -12,6 +12,7 @@ namespace Thorium_Blender
         public const string ArgFileName = "fileName";
         public const string ArgStartFrame = "startFrame";
         public const string ArgEndFrame = "endFrame";
+        public const string ArgUploadType = "uploadType";
 
         public BlenderExecutioner(LightweightTask t) : base(t)
         {
@@ -44,6 +45,7 @@ namespace Thorium_Blender
             rea.Environment["endFrame"] = endFrame.ToString();
             rea.Environment["jobId"] = Task.JobID;
             rea.Environment["taskId"] = Task.ID;
+            rea.Environment["uploadType"] = Task.GetInfo<string>(ArgUploadType);
 
             //rea.AddArgument("-b"); //console mode "background"
             //rea.AddArgument(filename);
