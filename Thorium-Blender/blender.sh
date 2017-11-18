@@ -11,7 +11,7 @@ workingDir=/tmp/work_$taskId
 
 mkdir -p $workingDir
 
-$blender2_79 -b $blendPath -s $startFrame -e $endFrame -o $workingDir/ -s
+$blender2_79 -b $blendPath -s $startFrame -e $endFrame -o $workingDir/ -a
 
 gsutil cp -r $workingDir gs://fredusarfs/frames/$jobId
 
