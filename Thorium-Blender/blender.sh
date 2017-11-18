@@ -7,7 +7,7 @@
 #jobId
 #taskId
 
-workingDir=/tmp/$jobId/$taskId
+workingDir=/tmp/work_$taskId
 
 mkdir -p $workingDir
 
