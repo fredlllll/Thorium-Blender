@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using Thorium_Shared;
 
@@ -6,23 +7,29 @@ namespace Thorium_Blender
 {
     public class BlenderTaskProducer : ATaskProducer
     {
-        Interval frames;
+        public const string ArgStartFrame = "startFrame";
+        public const string ArgEndFrame = "endFrame";
+        public const string ArgFramesPerTask = "framesPerTask";
+
+        //Interval frames;
+        int startFrame, endFrame;
+        int framesPerTask;
 
         public BlenderTaskProducer(Job job) : base(job)
         {
-            int start = Job.Information.Get<int>("framesStart");
-            int end = Job.Information.Get<int>("framesEnd");
-            frames = new Interval(start, end);
+            startFrame = Job.Information.Get<int>(ArgStartFrame);
+            endFrame = Job.Information.Get<int>(ArgEndFrame);
+            framesPerTask = Job.Information.Get<int>(ArgFramesPerTask);
         }
 
         IEnumerator<Task> GetTaskEnumerator()
         {
-            foreach(var frame in frames)
+            for(int i = startFrame; i <= endFrame; i += framesPerTask)
             {
                 JObject info = new JObject
                 {
-                    ["startFrame"] = frame,
-                    ["endFrame"] = frame
+                    ["startFrame"] = i,
+                    ["endFrame"] = Math.Min(i + framesPerTask - 1, endFrame)
                 };
 
                 yield return new Task(Job, Utils.GetRandomID(), info);
