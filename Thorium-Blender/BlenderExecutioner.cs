@@ -79,8 +79,9 @@ namespace Thorium_Blender
             {
                 FileName = Thorium_Shared.Files.GetExecutablePath("unzip")
             };
+            rea.AddArgument("-o"); //overwrite
             rea.AddArgument(Path.Combine(downloadFolder, "datapackage.zip"));
-            rea.AddArgument("-d");
+            rea.AddArgument("-d"); //output directory
             rea.AddArgument(targetFolder);
 
             rea.StartAndWait();
